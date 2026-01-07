@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +21,15 @@ import org.springframework.http.HttpHeaders;
 
 import com.learnwithranjan.restservices.entities.User;
 import com.learnwithranjan.restservices.exceptions.UserExistsException;
+import com.learnwithranjan.restservices.exceptions.UserNameNotFoundException;
 import com.learnwithranjan.restservices.exceptions.UserNotFound;
 import com.learnwithranjan.restservices.services.UserServices;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+
 @RestController
+@Validated
 public class UserController {
 	
 	@Autowired
@@ -44,7 +50,7 @@ public class UserController {
 	}*/
 	
 	@PostMapping("/users")
-	public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder builder) throws UserExistsException {
+	public ResponseEntity<Void> createUser(@Valid @RequestBody User user, UriComponentsBuilder builder) throws UserExistsException {
 		try {
 			userServices.createUsers(user);
 			HttpHeaders headers = new HttpHeaders();
@@ -56,7 +62,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/users/{id}")
-	public Optional<User> getUserById(@PathVariable("id")Long id) throws UserNotFound{
+	public Optional<User> getUserById(@PathVariable("id") @Min(1) Long id) throws UserNotFound{
 		try {
 			return userServices.getUserByID(id);
 		} catch (UserNotFound e) {
@@ -84,7 +90,11 @@ public class UserController {
 	}
 	
 	@GetMapping("/users/byusername/{username}")
-	public User getUserByUserName(@PathVariable("username")String username) {
+	public User getUserByUserName(@PathVariable("username")String username) throws UserNameNotFoundException{
+		User user = userServices.getUserByUserName(username);
+		if(user == null) {
+			throw new UserNameNotFoundException("User not exist");
+		}
 		return userServices.getUserByUserName(username);
 	}
 

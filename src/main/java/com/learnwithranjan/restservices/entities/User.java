@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 //@Table(name="person", schema="usermanagment")
 @Entity
@@ -15,9 +17,11 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	
+	@NotEmpty(message = "Username Should not be Empty")
 	@Column(name="USERNAME",length=50,nullable=false,unique=true)
 	private String username;
 	
+	@Size(min=2, message = "First Name should be atlease 2 charcters")
 	@Column(name="FIRST_NAME",length=50,nullable=false)
 	private String firstname;
 	

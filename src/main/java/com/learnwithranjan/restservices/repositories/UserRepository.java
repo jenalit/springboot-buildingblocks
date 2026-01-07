@@ -8,6 +8,6 @@ import com.learnwithranjan.restservices.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 	
-	 User getUserByUsername(String userName);
+	 User findByUsername(String userName);
 
 }

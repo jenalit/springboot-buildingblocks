@@ -10,4 +10,9 @@ VALUES (102,'syam@ranjan.com', 'syam','wiser','admin','ssn102','syran');
 INSERT INTO person (id, email, first_name, last_name, role, ssn, username)
 VALUES (103,'bela@ranjan.com', 'bela','david','admin','ssn103','beran');
 
-
+insert into orders values (2001,'order11',101);
+insert into orders values (2002,'order12',101);
+insert into orders values (2003,'order13',101);
+insert into orders values (2004,'order21',102);
+insert into orders values (2005,'order22',102);
+insert into orders values (2006,'order31',103);

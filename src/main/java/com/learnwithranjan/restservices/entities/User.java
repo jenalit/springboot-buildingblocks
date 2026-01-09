@@ -2,6 +2,10 @@ package com.learnwithranjan.restservices.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +18,8 @@ import jakarta.validation.constraints.Size;
 //@Table(name="person", schema="usermanagment")
 @Entity
 @Table(name="person")
+//@JsonIgnoreProperties({"firstname","lastname"}) --static filtering
+@JsonFilter(value="userFilter")
 public class User {
 	
 	@Id
@@ -37,6 +43,7 @@ public class User {
 	@Column(name="ROLE",length=50,nullable=false)
 	private String role;
 	
+	//@JsonIgnore
 	@Column(name="SSN",length=50,nullable=false,unique=true)
 	private String ssn;
 

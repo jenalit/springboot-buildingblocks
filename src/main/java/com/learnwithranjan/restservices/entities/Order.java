@@ -1,6 +1,7 @@
 package com.learnwithranjan.restservices.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,7 +16,9 @@ public class Order {
 	
 	@Id
 	@GeneratedValue
+	@JsonView(Views.Internal.class)
 	private Long orderid;
+	@JsonView(Views.Internal.class)
 	private String orderdesc;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

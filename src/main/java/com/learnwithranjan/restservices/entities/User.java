@@ -59,8 +59,13 @@ public class User {
 	private List<Order> orders;
 	public User() {
 	}
+	
+	@Column(name="ADDRESS")
+	private String address;
 
-	public User(Long id, String username, String firstname, String lastname, String email, String role, String ssn) {
+	public User(Long id, @NotEmpty(message = "Username Should not be Empty") String username,
+			@Size(min = 2, message = "First Name should be atlease 2 charcters") String firstname, String lastname,
+			String email, String role, String ssn, List<Order> orders, String address) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -69,6 +74,8 @@ public class User {
 		this.email = email;
 		this.role = role;
 		this.ssn = ssn;
+		this.orders = orders;
+		this.address = address;
 	}
 
 	public Long getId() {
@@ -134,11 +141,21 @@ public class User {
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
+	
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", email=" + email + ", role=" + role + ", ssn=" + ssn + "]";
+				+ ", email=" + email + ", role=" + role + ", ssn=" + ssn + ", orders=" + orders + ", address=" + address
+				+ "]";
 	}
 	
 
